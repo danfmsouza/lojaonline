@@ -1,14 +1,17 @@
 package br.edu.infnet.lojavirtiual.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.infnet.lojavirtiual.model.Cliente;
@@ -28,36 +31,53 @@ public class ClienteController {
 				@ApiResponse(code = 400, message = "Erro de chamada da API"),
 				@ApiResponse(code = 500, message = "Falha no processamento da chamada")	
 		})
-		@RequestMapping(value = "/clientes", method = RequestMethod.GET, produces = "application/json")
+		@GetMapping
 		public List<Cliente> listaTodos() {
 			return clienteService.listaTodos();
 		}
-		@RequestMapping(value = "/clientes", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+		
+		@ApiOperation(value = "Exibe um cliente")
+		@GetMapping(value = "/clientes/{id}" , produces = "application/json", consumes = "application/json")
+		public ResponseEntity<Cliente> exibir(@PathVariable(value="id")Long id) {
+			Optional<Cliente> existe = clienteService.obterPorId(id);
+			if(!existe.isPresent()) {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			} else {				
+				return new ResponseEntity<Cliente>(existe.get(), HttpStatus.OK);
+			}
+		}
+		
+		@ApiOperation(value = "Salva um novo Cliente")
+		@PostMapping(value = "/clientes", produces = "application/json", consumes = "application/json")
 		public Cliente criar(@RequestBody Cliente cliente) {
 			return clienteService.salvar(cliente);
 		}
 		
-		@RequestMapping(value = "/clientes/{id}" , method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
-		public ResponseEntity<Cliente> editar(@PathVariable(value="id")Integer id, @RequestBody Cliente cliente) {
-			if(clienteService.obterPorId(id) == null) {
+		@ApiOperation(value = "Edita um Cliente")
+		@PutMapping(value = "/clientes/{id}" , produces = "application/json", consumes = "application/json")
+		public ResponseEntity<Cliente> editar(@PathVariable("id") Long id, @RequestBody Cliente cliente) {
+			Optional<Cliente> existe = clienteService.obterPorId(id); 
+			if(!existe.isPresent()) {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			} else {
-				Cliente clienteAlterado = clienteService.alterar(id, cliente);
-				return new ResponseEntity<Cliente>(clienteAlterado, HttpStatus.OK);
+				clienteService.alterar(id, cliente);
+				return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
 			}
 			
 		}
+		
 		@ApiOperation(value = "Remove um cliente")
-		@RequestMapping(value = "/clientes/{id}" , method = RequestMethod.DELETE, produces = "application/json", consumes = "application/json")
-		public ResponseEntity<Object> deletar(@PathVariable(value="id")Integer id) {
-			Cliente cliente = clienteService.obterPorId(id);
-			if(cliente == null) {
+		@DeleteMapping(value = "/clientes/{id}", produces = "application/json", consumes = "application/json")
+		public ResponseEntity<Object> deletar(@PathVariable(value="id")Long id) {
+			Optional<Cliente> cliente = clienteService.obterPorId(id);
+			if(!cliente.isPresent()) {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			} else {
 				clienteService.deletar(id);
 				return new ResponseEntity<>(HttpStatus.OK);
 			}
 		}
+		
 		public ClienteService getClienteService() {
 			return clienteService;
 		}

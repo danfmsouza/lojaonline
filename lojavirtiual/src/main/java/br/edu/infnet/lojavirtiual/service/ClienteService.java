@@ -2,46 +2,41 @@ package br.edu.infnet.lojavirtiual.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+//import java.util.Map;
+//import java.util.TreeMap;
+//import java.util.Optional;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import br.edu.infnet.lojavirtiual.model.Cliente;
+import br.edu.infnet.lojavirtiual.model.persistence.ClienteRepository;
 
 @Service
 public class ClienteService {
-	private Map<Integer, Cliente> clientes;
-	private int count;
+	private ClienteRepository repository;
 	
-	public ClienteService() {
-//		count = 1;
-//		clientes = new TreeMap<Integer, Cliente>();
-//		clientes.put(count++, new Cliente(1, "Galaxy S6", 2200.0));
-//		clientes.put(count++, new Cliente(2, "Allstar", 200.0));
-//		clientes.put(count++, new Cliente(3, "TV OLED", 1200.0));
+	ClienteService(ClienteRepository clienteRepository) {
+		this.repository = clienteRepository;
 	}
-
+	
 	public List<Cliente> listaTodos() {
-		return new ArrayList<Cliente>(clientes.values());
+		return new ArrayList<Cliente>(repository.findAll());
 	}
 
 	public Cliente salvar(Cliente cliente) {
-		cliente.setId(count);
-		clientes.put(count++, cliente);
-		return cliente;
+		return repository.save(cliente);
 	}
 
-	public Cliente alterar(Integer id, Cliente cliente) {
-		clientes.put(id, cliente);
-		return cliente;
+	public Cliente alterar(Long id, Cliente cliente) {
+		return repository.save(cliente);
 	}
 
-	public void deletar(Integer id) {
-		clientes.remove(id);
+	public void deletar(Long id) {
+		repository.deleteById(id);
 	}
 
-	public Cliente obterPorId(Integer id) {
-		return clientes.get(id);
+	public Optional<Cliente> obterPorId(Long id) {
+		return repository.findById(id); 
 	}
 }

@@ -10,27 +10,27 @@ import javax.persistence.Id;
 public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	
 	@Column(name="nome_do_cliente")
 	private String nome;
-	private int telefone;
+	private Integer telefone;
 
 	public Cliente() {
 		
 	}
 
-	public Cliente(Integer id, String nome, int telefone) {
+	public Cliente(Long id, String nome, Integer telefone) {
 		this.id = id;
 		this.nome = nome;
 		this.telefone = telefone;
 	}
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -42,11 +42,11 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public double getTelefone() {
+	public Integer getTelefone() {
 		return telefone;
 	}
 
-	public void setTelefone(int telefone) {
+	public void setTelefone(Integer telefone) {
 		this.telefone = telefone;
 	}
 
