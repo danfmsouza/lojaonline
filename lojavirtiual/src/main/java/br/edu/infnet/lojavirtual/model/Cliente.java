@@ -1,4 +1,4 @@
-package br.edu.infnet.lojavirtiual.model;
+package br.edu.infnet.lojavirtual.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,17 +13,17 @@ public class Cliente {
 	private Long id;
 	
 	@Column(name="nome_do_cliente")
-	private String nome;
-	private Integer telefone;
+	private String usuario;
+	private String email;
 
 	public Cliente() {
 		
 	}
 
-	public Cliente(Long id, String nome, Integer telefone) {
+	public Cliente(Long id, String usuario, String email, Integer telefone) {
 		this.id = id;
-		this.nome = nome;
-		this.telefone = telefone;
+		this.usuario = usuario;
+		this.email = email;
 	}
 	
 	public Long getId() {
@@ -34,20 +34,19 @@ public class Cliente {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
-	public Integer getTelefone() {
-		return telefone;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setTelefone(Integer telefone) {
-		this.telefone = telefone;
-	}
-
+	public void setEmail(String email) {
+		this.email = email;
+	}	
 }

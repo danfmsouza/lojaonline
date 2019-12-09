@@ -1,4 +1,4 @@
-package br.edu.infnet.lojavirtiual.controller;
+package br.edu.infnet.lojavirtual.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.edu.infnet.lojavirtiual.model.Cliente;
-import br.edu.infnet.lojavirtiual.service.ClienteService;
+import br.edu.infnet.lojavirtual.model.Cliente;
+import br.edu.infnet.lojavirtual.service.ClienteService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -74,7 +74,8 @@ public class ClienteController {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			} else {
 				clienteService.deletar(id);
-				return new ResponseEntity<>(HttpStatus.OK);
+				String deletado = "id " + id + " Deletado com sucesso";
+				return new ResponseEntity<>(deletado, HttpStatus.OK);
 			}
 		}
 		

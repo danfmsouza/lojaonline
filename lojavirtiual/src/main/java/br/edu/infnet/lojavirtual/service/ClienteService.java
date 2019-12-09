@@ -1,4 +1,4 @@
-package br.edu.infnet.lojavirtiual.service;
+package br.edu.infnet.lojavirtual.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +9,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import br.edu.infnet.lojavirtiual.model.Cliente;
-import br.edu.infnet.lojavirtiual.model.persistence.ClienteRepository;
+import br.edu.infnet.lojavirtual.model.Cliente;
+import br.edu.infnet.lojavirtual.model.persistence.ClienteRepository;
 
 @Service
 public class ClienteService {

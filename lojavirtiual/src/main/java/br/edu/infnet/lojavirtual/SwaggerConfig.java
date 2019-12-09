@@ -1,4 +1,4 @@
-package br.edu.infnet.lojavirtiual;
+package br.edu.infnet.lojavirtual;
 
 import org.springframework.context.annotation.Configuration;
 
@@ -17,7 +17,7 @@ public class SwaggerConfig {
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("br.edu.infnet.lojavirtiual.controller"))
+				.apis(RequestHandlerSelectors.basePackage("br.edu.infnet.lojavirtual.controller"))
 					.paths(PathSelectors.any())
 					.build()
 					.apiInfo(apiInfo());
